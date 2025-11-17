@@ -3,20 +3,36 @@ import React from 'react';
 const Gallery = () => {
   const images = [
     {
-      url: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
-      alt: 'Plat signature'
+      url: '/Assets/couscousroyal2.jpg',
+      alt: 'Couscous Royal'
     },
     {
-      url: 'https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
-      alt: 'Cuisine méditerranéenne'
+      url: '/Assets/salade.jpg',
+      alt: 'Salade'
     },
     {
-      url: 'https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
-      alt: 'Dessert'
+      url: '/Assets/Brochette.jpg',
+      alt: 'Brochette'
     },
     {
-      url: 'https://images.unsplash.com/photo-1551218372-8a26d077b0ff?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
-      alt: 'Ambiance'
+      url: '/Assets/bourek.jpg',
+      alt: 'Bourek'
+    },
+    {
+      url: '/Assets/Tajine.jpg',
+      alt: 'Tajine'
+    },
+    {
+      url: '/Assets/couscous3.jpg',
+      alt: 'Couscous'
+    },
+    {
+      url: '/Assets/pastilla.jpg',
+      alt: 'Pastilla'
+    },
+    {
+      url: '/Assets/sousmarin.jpg',
+      alt: 'Sous-marin'
     }
   ];
 

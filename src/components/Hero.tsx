@@ -11,7 +11,7 @@ const Hero = ({ setIsReservationOpen }: HeroProps) => {
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
-          backgroundImage: 'url("Assets/uber2.jpeg")',
+          backgroundImage: 'url("/Assets/Fond.jpeg")',
         }}
       >
         <div className="absolute inset-0 bg-black/50" />
@@ -22,7 +22,7 @@ const Hero = ({ setIsReservationOpen }: HeroProps) => {
           Restaurant Aux 2 Violons
         </h1>
         <p className="text-xl md:text-2xl mb-8 max-w-2xl">
-          Une expérience gastronomique unique où la cuisine méditerranéenne rencontre l'élégance française
+          Une expérience gastronomique unique où la cuisine méditerranéenne rencontre l'élégance Orientale
         </p>
         <button
           onClick={() => setIsReservationOpen(true)}

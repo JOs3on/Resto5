@@ -1,5 +1,5 @@
 import React from 'react';
-import { Phone, MapPin, Clock } from 'lucide-react';
+import { Phone, MapPin, Clock, Mail } from 'lucide-react';
 
 const Contact = () => {
   return (
@@ -13,55 +13,40 @@ const Contact = () => {
                 <Phone className="w-6 h-6 mr-4 text-gold" />
                 <div>
                   <h3 className="font-semibold mb-1">Téléphone</h3>
-                  <p>+33 1 23 45 67 89</p>
+                  <p>418-523-1111</p>
+                </div>
+              </div>
+              <div className="flex items-start">
+                <Mail className="w-6 h-6 mr-4 text-gold" />
+                <div>
+                  <h3 className="font-semibold mb-1">Email</h3>
+                  <p><a href="mailto:info@restaurantaux2violons.com" className="hover:text-gold transition">info@restaurantaux2violons.com</a></p>
                 </div>
               </div>
               <div className="flex items-start">
                 <MapPin className="w-6 h-6 mr-4 text-gold" />
                 <div>
                   <h3 className="font-semibold mb-1">Adresse</h3>
-                  <p>123 Rue de Paris<br />75001 Paris</p>
+                  <p>310 Boul. René Lévesque Ouest<br />G1S1R9 Québec</p>
                 </div>
               </div>
               <div className="flex items-start">
                 <Clock className="w-6 h-6 mr-4 text-gold" />
                 <div>
                   <h3 className="font-semibold mb-1">Horaires</h3>
-                  <p>Mardi - Dimanche<br />12h00 - 14h30<br />19h00 - 22h30</p>
+                  <p>
+                    Mercredi: 17h-21h<br />
+                    Jeudi: 11h30h-14h ,17h-21h<br />
+                    Vendredi: 11h30h-14h ,17h-22h<br />
+                    Samedi: 17h-22h<br />
+                    Dimanche: 17h-21h
+                  </p>
                 </div>
               </div>
             </div>
           </div>
-          <div>
-            <form className="space-y-6">
-              <div>
-                <label className="block text-sm font-medium mb-2">Nom</label>
-                <input
-                  type="text"
-                  className="w-full px-4 py-2 rounded border border-gray-300 focus:border-gold focus:outline-none"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-2">Email</label>
-                <input
-                  type="email"
-                  className="w-full px-4 py-2 rounded border border-gray-300 focus:border-gold focus:outline-none"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-2">Message</label>
-                <textarea
-                  rows={4}
-                  className="w-full px-4 py-2 rounded border border-gray-300 focus:border-gold focus:outline-none"
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full px-6 py-3 bg-burgundy text-cream rounded hover:bg-burgundy/90 transition"
-              >
-                Envoyer
-              </button>
-            </form>
+          <div className="md:col-span-1">
+            {/* This div is to occupy the second column and make the first column wider */}
           </div>
         </div>
       </div>
