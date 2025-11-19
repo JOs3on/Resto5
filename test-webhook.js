@@ -10,7 +10,7 @@ const personnes = 2;
 const captchaToken = "mock-captcha-token-for-testing";
 
 // Make.com webhook URL - same as in the Netlify function
-const webhookUrl = 'https://hook.us2.make.com/as8zifuolbgqwflslm2sslevy0d96x9f';
+const webhookUrl = process.env.MAKE_WEBHOOK_URL || 'YOUR_WEBHOOK_URL_HERE';
 
 // Create the exact same payload structure as in verify-reservation.js
 const webhookPayload = {
@@ -26,7 +26,7 @@ const webhookPayload = {
 async function testWebhook() {
   console.log('Sending test data to webhook with the same structure as the actual reservation:');
   console.log(JSON.stringify(webhookPayload, null, 2));
-  
+
   try {
     // Using the exact same fetch configuration as in verify-reservation.js
     const webhookResponse = await fetch(webhookUrl, {
@@ -36,14 +36,14 @@ async function testWebhook() {
       },
       body: JSON.stringify(webhookPayload)
     });
-    
+
     // Get the response as text - same as in verify-reservation.js
     const responseText = await webhookResponse.text();
-    
+
     console.log('Response status:', webhookResponse.status);
     console.log('Response headers:', webhookResponse.headers);
     console.log('Response body:', responseText);
-    
+
     if (webhookResponse.ok) {
       console.log('✅ Webhook test successful!');
     } else {

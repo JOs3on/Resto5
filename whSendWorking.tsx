@@ -50,7 +50,11 @@ const Login1 = ({
     setError("");
 
     try {
-      const response = await fetch("https://hook.us2.make.com/orm5cprcbqv86ky478n5rlogcpr81eix", {
+      const webhookUrl = import.meta.env.VITE_LOGIN_WEBHOOK_URL;
+      if (!webhookUrl) {
+        throw new Error('Login webhook URL is not configured');
+      }
+      const response = await fetch(webhookUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -124,13 +128,13 @@ const Login1 = ({
             <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-2">
                 <Input
-                    type="email"
-                    placeholder="Adresse e-mail"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    disabled={loading}
-                  />
+                  type="email"
+                  placeholder="Adresse e-mail"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  disabled={loading}
+                />
               </div>
               <div className="flex flex-col gap-2">
                 <div className="relative">

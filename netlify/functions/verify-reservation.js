@@ -21,9 +21,9 @@ exports.handler = async (event, context) => {
     return {
       statusCode: 405,
       headers,
-      body: JSON.stringify({ 
-        success: false, 
-        message: 'Method not allowed. Only POST requests are accepted.' 
+      body: JSON.stringify({
+        success: false,
+        message: 'Method not allowed. Only POST requests are accepted.'
       })
     };
   }
@@ -37,9 +37,9 @@ exports.handler = async (event, context) => {
       return {
         statusCode: 400,
         headers,
-        body: JSON.stringify({ 
-          success: false, 
-          message: 'Missing required fields. Please fill in all form fields.' 
+        body: JSON.stringify({
+          success: false,
+          message: 'Missing required fields. Please fill in all form fields.'
         })
       };
     }
@@ -108,7 +108,10 @@ exports.handler = async (event, context) => {
       timestamp: new Date().toISOString()
     });
 
-    const webhookUrl = process.env.MAKE_WEBHOOK_URL || 'https://hook.us2.make.com/as8zifuolbgqwflslm2sslevy0d96x9f';
+    const webhookUrl = process.env.MAKE_WEBHOOK_URL;
+    if (!webhookUrl) {
+      throw new Error('MAKE_WEBHOOK_URL environment variable is not set');
+    }
     const webhookPayload = {
       nom,
       telephone: telDigits,
@@ -145,13 +148,13 @@ exports.handler = async (event, context) => {
     // 1. Save the reservation to a database
     // 2. Send confirmation emails to both customer and restaurant
     // 3. Integrate with your reservation management system
-    
+
     // For now, we'll just log the reservation and return success
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify({ 
-        success: true, 
+      body: JSON.stringify({
+        success: true,
         message: 'Réservation reçue avec succès! Nous vous contacterons pour confirmer.',
         reservationId: `RES-${Date.now()}` // Generate a simple reservation ID
       })
@@ -159,15 +162,15 @@ exports.handler = async (event, context) => {
 
   } catch (error) {
     console.error('Error processing reservation:', error);
-    
+
     // Handle JSON parsing errors
     if (error instanceof SyntaxError) {
       return {
         statusCode: 400,
         headers,
-        body: JSON.stringify({ 
-          success: false, 
-          message: 'Invalid request format. Please check your data and try again.' 
+        body: JSON.stringify({
+          success: false,
+          message: 'Invalid request format. Please check your data and try again.'
         })
       };
     }
@@ -177,9 +180,9 @@ exports.handler = async (event, context) => {
       return {
         statusCode: 503,
         headers,
-        body: JSON.stringify({ 
-          success: false, 
-          message: 'Service temporarily unavailable. Please try again later.' 
+        body: JSON.stringify({
+          success: false,
+          message: 'Service temporarily unavailable. Please try again later.'
         })
       };
     }
@@ -188,9 +191,9 @@ exports.handler = async (event, context) => {
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ 
-        success: false, 
-        message: 'An unexpected error occurred. Please try again later.' 
+      body: JSON.stringify({
+        success: false,
+        message: 'An unexpected error occurred. Please try again later.'
       })
     };
   }
