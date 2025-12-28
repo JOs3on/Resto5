@@ -1,320 +1,171 @@
-import React from 'react';
+import { useMemo } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { menuData, tableDHoete } from '../data/menuData';
+import SEO from './SEO';
+import { getMenuSchema } from '../lib/schema';
+import { ArrowLeft } from 'lucide-react';
 
 const Menu: React.FC = () => {
+  const { category } = useParams<{ category?: string }>();
+
+  const filteredMenu = useMemo(() => {
+    if (!category) return menuData;
+    return menuData.filter((s) => s.id === category);
+  }, [category]);
+
+  const activeSection = useMemo(() => {
+    if (!category) return null;
+    return menuData.find((s) => s.id === category);
+  }, [category]);
+
+  const title = activeSection
+    ? `${activeSection.title} - Menu`
+    : "Notre Menu Gastronomique";
+
+  const description = activeSection
+    ? `Découvrez nos délicieux ${activeSection.title.toLowerCase()} chez Aux 2 Violons à Québec. Authentique cuisine méditerranéenne.`
+    : "Explorez notre menu varié : Couscous, Tajines, Grillades et plus. Apportez votre vin et savourez l'Orient à Québec.";
+
   return (
-    <div id="menu" className="relative min-h-screen pt-20">
-      {/* Menu background image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center z-0"
-        style={{ backgroundImage: 'url("/Assets/Menu.png")' }}
-      ></div>
-      
-      {/* Menu content container */}
-      <div className="relative z-10 container mx-auto px-4 py-16">
-        <div className="bg-white/80 backdrop-blur-sm rounded-lg shadow-xl p-8 max-w-5xl mx-auto">
-          <h1 className="text-3xl font-bold text-center mb-8 text-amber-900">Notre Menu</h1>
-          <p className="text-xl italic font-serif text-center mb-8 text-amber-700">Apportez Votre Vin</p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Left Column */}
-            <div>
-              {/* LES ENTRÉES CHAUDES */}
-              <div className="mb-8">
-                <h2 className="text-2xl font-semibold text-amber-800 border-b-2 border-amber-600 pb-2 mb-4">LES ENTRÉES CHAUDES</h2>
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span className="font-medium">Chorba frik</span>
-                    <span>4,95</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium">Merguez grillées</span>
-                    <span>8,75</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium">Frites mayonnaise maison</span>
-                    <span>4,25</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium">Doigts de Fatima à la viande</span>
-                    <span>10,75</span>
-                  </div>
-                </div>
-              </div>
+    <div id="menu" className="relative min-h-screen pt-24 pb-16 bg-cream">
+      <SEO
+        title={title}
+        description={description}
+        canonical={category ? `/menu/${category}` : "/menu"}
+        ogType="menu"
+        schema={getMenuSchema()}
+      />
 
-              {/* LES ENTRÉES FROIDES */}
-              <div className="mb-8">
-                <h2 className="text-2xl font-semibold text-amber-800 border-b-2 border-amber-600 pb-2 mb-4">LES ENTRÉES FROIDES</h2>
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span className="font-medium">Feuilles de vigne</span>
-                    <span>9,75</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium">Salade de taboulé</span>
-                    <span>9,25</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium">Salade méditerranéenne</span>
-                    <span>10,95</span>
-                  </div>
-                </div>
-              </div>
+      {/* Hero Section for Menu */}
+      <div className="relative h-[40vh] min-h-[300px] flex items-center justify-center overflow-hidden mb-12">
+        <div
+          className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 hover:scale-105"
+          style={{ backgroundImage: 'url("/Assets/Menu.png")' }}
+        >
+          <div className="absolute inset-0 bg-burgundy/40 backdrop-blur-[2px]"></div>
+        </div>
+        <div className="relative z-10 text-center text-cream px-4">
+          <h1 className="text-4xl md:text-6xl font-serif mb-4 drop-shadow-lg">
+            {activeSection ? activeSection.title : "L'Art Culinaire"}
+          </h1>
+          <p className="text-xl md:text-2xl font-light italic mb-6">Apportez Votre Vin</p>
+          {category && (
+            <Link
+              to="/menu"
+              className="inline-flex items-center text-gold hover:text-white transition-colors gap-2"
+            >
+              <ArrowLeft size={20} /> Voir tout le menu
+            </Link>
+          )}
+        </div>
+      </div>
 
-              {/* LES POUTINES */}
-              <div className="mb-8">
-                <h2 className="text-2xl font-semibold text-amber-800 border-b-2 border-amber-600 pb-2 mb-4">LES POUTINES</h2>
-                <div className="space-y-2">
-                  <div>
-                    <div className="flex justify-between">
-                      <span className="font-medium">Poutine régulière</span>
-                    </div>
-                    <div className="flex justify-between text-sm pl-4">
-                      <span>Midi ou emporter</span>
-                      <span>12,00</span>
-                    </div>
-                    <div className="flex justify-between text-sm pl-4">
-                      <span>Soir</span>
-                      <span>17,00</span>
-                    </div>
-                  </div>
-                  <div>
-                    <div className="flex justify-between">
-                      <span className="font-medium">Poutine Aux 2 Violons</span>
-                    </div>
-                    <div className="flex justify-between text-sm pl-4">
-                      <span>Midi ou emporter</span>
-                      <span>15,00</span>
-                    </div>
-                    <div className="flex justify-between text-sm pl-4">
-                      <span>Soir</span>
-                      <span>19,00</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+      <div className="container mx-auto px-4">
+        {/* Category Navigation (Internal Linking for SEO) */}
+        {!category && (
+          <div className="flex flex-wrap justify-center gap-4 mb-16">
+            {menuData.map((section) => (
+              <Link
+                key={section.id}
+                to={`/menu/${section.id}`}
+                className="px-6 py-2 border border-gold/30 rounded-full text-burgundy hover:bg-gold hover:text-white transition-all duration-300 shadow-sm"
+              >
+                {section.title}
+              </Link>
+            ))}
+          </div>
+        )}
 
-              {/* NOS BROCHETTES */}
-              <div className="mb-8">
-                <h2 className="text-2xl font-semibold text-amber-800 border-b-2 border-amber-600 pb-2 mb-4">NOS BROCHETTES</h2>
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span className="font-medium">Brochette de poulet</span>
-                    <span>27,00</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium">Brochette d'agneau</span>
-                    <span>28,00</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium">Brochette mixte</span>
-                    <span>29,00</span>
-                  </div>
+        <div className="max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            {filteredMenu.map((section, idx) => (
+              <section
+                key={section.id}
+                className={`mb-12 animate-in fade-in slide-in-from-bottom-4 duration-500`}
+                style={{ animationDelay: `${idx * 100}ms` }}
+              >
+                <div className="flex items-center gap-4 mb-6">
+                  <h2 className="text-2xl font-serif text-burgundy whitespace-nowrap">{section.title}</h2>
+                  <div className="h-[1px] w-full bg-gold/30"></div>
                 </div>
-              </div>
 
-              {/* GRILLADES */}
-              <div className="mb-8">
-                <h2 className="text-2xl font-semibold text-amber-800 border-b-2 border-amber-600 pb-2 mb-4">GRILLADES</h2>
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span className="font-medium">Suprême de poitrine de poulet à l'orientale</span>
-                    <span>27,00</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium">Grillades du chef</span>
-                    <span>30,00</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+                {section.description && (
+                  <p className="text-sm italic text-burgundy/70 mb-4">{section.description}</p>
+                )}
 
-            {/* Right Column */}
-            <div>
-              {/* COUSCOUS */}
-              <div className="mb-8">
-                <h2 className="text-2xl font-semibold text-amber-800 border-b-2 border-amber-600 pb-2 mb-4">COUSCOUS</h2>
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span className="font-medium">Couscous aux légumes</span>
-                    <span>23,00</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium">Couscous Aux 2 Violons (Shish Taouk)</span>
-                    <span>26,00</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium">Couscous au poulet (Cuisse)</span>
-                    <span>26,00</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium">Couscous aux merguez</span>
-                    <span>26,00</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium">Couscous au jarret d'agneau</span>
-                    <span>29,00</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium">Couscous royal</span>
-                    <span>30,00</span>
-                  </div>
-                </div>
-              </div>
+                <div className="space-y-6">
+                  {section.items.map((item, itemIdx) => (
+                    <div key={itemIdx} className="group">
+                      <div className="flex justify-between items-baseline mb-1">
+                        <h3 className="text-lg font-medium group-hover:text-gold transition-colors">
+                          {item.name}
+                        </h3>
+                        {item.price && (
+                          <span className="text-burgundy font-serif font-semibold ml-4">
+                            {typeof item.price === 'number' ? item.price.toFixed(2) : item.price}$
+                          </span>
+                        )}
+                      </div>
 
-              {/* TAJINES */}
-              <div className="mb-8">
-                <h2 className="text-2xl font-semibold text-amber-800 border-b-2 border-amber-600 pb-2 mb-4">TAJINES</h2>
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span className="font-medium">Tajine de poulet aux olives</span>
-                    <span>23,00</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium">Tajine agneau</span>
-                    <span>26,00</span>
-                  </div>
-                </div>
-              </div>
+                      {item.description && (
+                        <p className="text-sm text-burgundy/60 font-light">{item.description}</p>
+                      )}
 
-              {/* LES PLATS MAGHRÉBINS */}
-              <div className="mb-8">
-                <h2 className="text-2xl font-semibold text-amber-800 border-b-2 border-amber-600 pb-2 mb-4">LES PLATS MAGHRÉBINS</h2>
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span className="font-medium">Assiette falafel</span>
-                    <span>23,00</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium">Assiette kefta</span>
-                    <span>25,00</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium">Assiette merguez</span>
-                    <span>25,00</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium">Assiette shish taouk</span>
-                    <span>25,00</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium">Assiette shawarma</span>
-                    <span>25,00</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium">Assiette combinée</span>
-                    <span>26,00</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium">Pastilla au poulet et amandes</span>
-                    <span>25,00</span>
-                  </div>
+                      {item.prices && (
+                        <div className="space-y-1 ml-4 mt-2 border-l border-gold/20 pl-4">
+                          {item.prices.map((p, pIdx) => (
+                            <div key={pIdx} className="flex justify-between text-sm">
+                              <span className="text-burgundy/70 italic">{p.label}</span>
+                              <span className="font-medium">{typeof p.value === 'number' ? p.value.toFixed(2) : p.value}$</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
                 </div>
-              </div>
-
-              {/* LES SOUS-MARINS */}
-              <div className="mb-8">
-                <h2 className="text-2xl font-semibold text-amber-800 border-b-2 border-amber-600 pb-2 mb-4">LES SOUS-MARINS</h2>
-                <p className="text-sm italic mb-2">(avec salades, riz, frites ou semoule)</p>
-                <div className="space-y-4">
-                  <div>
-                    <div className="flex justify-between">
-                      <span className="font-medium">Falafel</span>
-                    </div>
-                    <div className="flex justify-between text-sm pl-4">
-                      <span>Midi ou emporter</span>
-                      <span>15,00</span>
-                    </div>
-                    <div className="flex justify-between text-sm pl-4">
-                      <span>Soir</span>
-                      <span>21,00</span>
-                    </div>
-                  </div>
-                  <div>
-                    <div className="flex justify-between">
-                      <span className="font-medium">Shish taouk</span>
-                    </div>
-                    <div className="flex justify-between text-sm pl-4">
-                      <span>Midi ou emporter</span>
-                      <span>17,00</span>
-                    </div>
-                    <div className="flex justify-between text-sm pl-4">
-                      <span>Soir</span>
-                      <span>22,00</span>
-                    </div>
-                  </div>
-                  <div>
-                    <div className="flex justify-between">
-                      <span className="font-medium">Shawarma</span>
-                    </div>
-                    <div className="flex justify-between text-sm pl-4">
-                      <span>Midi ou emporter</span>
-                      <span>17,00</span>
-                    </div>
-                    <div className="flex justify-between text-sm pl-4">
-                      <span>Soir</span>
-                      <span>22,00</span>
-                    </div>
-                  </div>
-                  <div>
-                    <div className="flex justify-between">
-                      <span className="font-medium">Kefta</span>
-                    </div>
-                    <div className="flex justify-between text-sm pl-4">
-                      <span>Midi ou emporter</span>
-                      <span>17,00</span>
-                    </div>
-                    <div className="flex justify-between text-sm pl-4">
-                      <span>Soir</span>
-                      <span>22,00</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+              </section>
+            ))}
           </div>
 
-          {/* TABLE D'HÔTE - Full width */}
-          <div className="mt-8">
-            <h2 className="text-2xl font-semibold text-amber-800 border-b-2 border-amber-600 pb-2 mb-4">TABLE D'HÔTE</h2>
-            <div className="space-y-4">
-              <div>
-                <h3 className="font-medium">Entrées:</h3>
-                <p className="pl-4">Soupe Chorba frik ou Bourrek à la viande</p>
-              </div>
-              <div>
-                <h3 className="font-medium">Plats Principaux:</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 pl-4">
-                  <div className="flex justify-between">
-                    <span>Pastilla au poulet et amandes</span>
-                    <span>36,00</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Brochette de poulet</span>
-                    <span>38,00</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Tajine Berbère au jarret d'agneau</span>
-                    <span>40,00</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Grillades du Chef</span>
-                    <span>41,00</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Couscous Royal</span>
-                    <span>39,00</span>
-                  </div>
+          {/* Table d'hôte - Full Width Showcase */}
+          {(!category || category === 'table-dhote') && (
+            <section className="mt-16 p-8 md:p-12 bg-burgundy text-cream rounded-2xl shadow-2xl relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-gold/10 rounded-full -mr-32 -mt-32 transition-transform group-hover:scale-110"></div>
+
+              <div className="relative z-10">
+                <div className="flex flex-col items-center text-center mb-12">
+                  <span className="text-gold uppercase tracking-[0.3em] text-sm mb-4">Expérience Signature</span>
+                  <h2 className="text-4xl md:text-5xl font-serif mb-4">{tableDHoete.title}</h2>
+                  <div className="w-24 h-1 bg-gold"></div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  {tableDHoete.sections.map((section, idx) => (
+                    <div key={idx} className="space-y-4">
+                      <h3 className="text-xl font-serif text-gold border-b border-gold/30 pb-2">{section.label}</h3>
+                      {section.content && <p className="italic">{section.content}</p>}
+                      {section.items && (
+                        <div className="space-y-3">
+                          {section.items.map((item, iIdx) => (
+                            <div key={iIdx} className="flex justify-between items-center gap-2">
+                              <span className="text-sm font-light">{item.name}</span>
+                              <span className="text-gold font-serif">{typeof item.price === 'number' ? item.price.toFixed(2) : item.price}$</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-12 pt-8 border-t border-gold/20 text-center italic">
+                  <p className="text-xl md:text-2xl text-gold mb-2">"{tableDHoete.note}"</p>
+                  <p className="text-sm text-cream/60">Une expérience gastronomique complète pour les fins gourmets.</p>
                 </div>
               </div>
-              <div>
-                <h3 className="font-medium">Dessert:</h3>
-                <p className="pl-4">Café ou thé inclus</p>
-              </div>
-              <div className="mt-4 p-3 bg-amber-100 rounded-lg">
-                <p className="font-medium italic">Note: Faites votre Table d'hôte, choisissez un autre plat à la carte et ajoutez 11.</p>
-              </div>
-            </div>
-          </div>
+            </section>
+          )}
         </div>
       </div>
     </div>
